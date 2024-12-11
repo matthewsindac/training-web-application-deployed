@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from models import db, Employee, Certification, Trainer, TrainingSession, SessionRSVP
+from .models import db, Employee, Certification, Trainer, TrainingSession, SessionRSVP
 from datetime import datetime
 import os
 
