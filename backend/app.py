@@ -2,12 +2,13 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from .models import db, Employee, Certification, Trainer, TrainingSession, SessionRSVP
 from datetime import datetime
+from sqlalchemy import func
 import os
 
 app = Flask(__name__)
 CORS(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///local.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///training.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
@@ -45,7 +46,6 @@ def get_training_sessions():
             'certification': session.certification.name if session.certification else None
         } for session in sessions]
     })
-
 
 
 @app.route('/api/training_sessions', methods=['POST'])
@@ -108,7 +108,7 @@ def get_certifications():
         'certification_id': cert.certification_id,
         'name': cert.name
     } for cert in certifications])
-from sqlalchemy import func
+
 
 @app.route('/api/training_sessions/report', methods=['GET'])
 def get_training_sessions_report():

@@ -20,12 +20,12 @@ function TrainingSessionForm({ onSubmit, sessionData }) {
     const durations = Array.from({ length: 8 }, (_, i) => (i + 1) * 15); 
 
     useEffect(() => {
-        fetch("http://127.0.0.1:5000/api/trainers")
+        fetch("https://training-web-application-deployed.onrender.com/api/trainers")
             .then(response => response.json())
             .then(data => setTrainers(data))
             .catch(error => console.error("Error fetching trainers:", error));
 
-        fetch("http://127.0.0.1:5000/api/certifications")
+        fetch("https://training-web-application-deployed.onrender.com/api/certifications")
             .then(response => response.json())
             .then(data => setCertifications(data))
             .catch(error => console.error("Error fetching certifications:", error));

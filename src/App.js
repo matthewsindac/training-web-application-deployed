@@ -12,7 +12,7 @@ function TrainingSessionManagement() {
     }, []);
 
     const fetchSessions = () => {
-        fetch("http://127.0.0.1:5000/api/training_sessions")
+        fetch("https://training-web-application-deployed.onrender.com/api/training_sessions")
             .then(response => {
                 if (!response.ok) throw new Error("Failed to fetch sessions");
                 return response.json();
@@ -26,7 +26,7 @@ function TrainingSessionManagement() {
     
 
     const handleAddSession = (sessionData) => {
-        fetch("http://127.0.0.1:5000/api/training_sessions", {
+        fetch("https://training-web-application-deployed.onrender.com/api/training_sessions", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(sessionData)
@@ -34,7 +34,7 @@ function TrainingSessionManagement() {
     };
 
     const handleEditSession = (sessionData) => {
-        fetch(`http://127.0.0.1:5000/api/training_sessions/${editingSession.session_id}`, {
+        fetch(`https://training-web-application-deployed.onrender.com/api/training_sessions/${editingSession.session_id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(sessionData)
@@ -50,7 +50,7 @@ function TrainingSessionManagement() {
         }
 
         if (window.confirm("Are you sure you want to delete this session?")) {
-            fetch(`http://127.0.0.1:5000/api/training_sessions/${sessionId}`, { method: 'DELETE' })
+            fetch(`https://training-web-application-deployed.onrender.com/api/training_sessions/${sessionId}`, { method: 'DELETE' })
                 .then(() => fetchSessions());
         }
     };

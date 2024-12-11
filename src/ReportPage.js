@@ -11,12 +11,12 @@ function ReportPage() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch("http://127.0.0.1:5000/api/trainers")
+        fetch("https://training-web-application-deployed.onrender.com/api/trainers")
             .then(response => response.json())
             .then(data => setTrainers(data))
             .catch(err => setError("Failed to load trainers"));
 
-        fetch("http://127.0.0.1:5000/api/certifications")
+        fetch("https://training-web-application-deployed.onrender.com/api/certifications")
             .then(response => response.json())
             .then(data => setCertifications(data))
             .catch(err => setError("Failed to load certifications"));
@@ -30,7 +30,7 @@ function ReportPage() {
             certification_id: certificationId || null
         });
 
-        fetch(`http://127.0.0.1:5000/api/training_sessions/report?${params.toString()}`)
+        fetch(`https://training-web-application-deployed.onrender.com/api/training_sessions/report?${params.toString()}`)
             .then(response => {
                 if (!response.ok) throw new Error("Failed to generate report");
                 return response.json();
