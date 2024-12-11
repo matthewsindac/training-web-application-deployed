@@ -16,6 +16,48 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
 
+    if not Employee.query.first():
+        sample_employee = Employee(name="John Doe", email="john.doe@example.com", department="Engineering")
+        db.session.add(sample_employee)
+
+    if not Trainer.query.first():
+        sample_trainers = [
+            {"name": "Alice Smith", "email": "alice.smith@example.com", "specialization": "Safety Training"},
+            {"name": "Matthew Sindac", "email": "matthew.sindac@example.com", "specialization": "Technical Training"},
+            {"name": "David Blaine", "email": "david.blaine@example.com", "specialization": "Soft Skills"},
+            {"name": "LeBron James", "email": "lebron.james@example.com", "specialization": "Teamwork Training"},
+            {"name": "Ja Morant", "email": "ja.morant@example.com", "specialization": "Leadership"},
+            {"name": "Damian Lillard", "email": "damian.lillard@example.com", "specialization": "Communication Skills"}
+        ]
+        for trainer in sample_trainers:
+            if not Trainer.query.filter_by(email=trainer["email"]).first():
+                new_trainer = Trainer(name=trainer["name"], email=trainer["email"], specialization=trainer["specialization"])
+                db.session.add(new_trainer)
+
+    if not Certification.query.first():
+        sample_certifications = [
+            {"name": "First Aid Certification", "description": "Basic first aid training", "validity_period": 24},
+            {"name": "CPR Certification", "description": "Certification in cardiopulmonary resuscitation", "validity_period": 12},
+            {"name": "Fire Safety Certification", "description": "Training on fire prevention and safety", "validity_period": 36},
+            {"name": "Leadership Training Certification", "description": "Skills development in leadership", "validity_period": 18},
+            {"name": "Conflict Resolution Certification", "description": "Training on resolving workplace conflicts", "validity_period": 24},
+            {"name": "Health & Safety Certification", "description": "Certification for workplace health and safety", "validity_period": 36},
+            {"name": "Time Management Certification", "description": "Skills for effective time management", "validity_period": 12},
+            {"name": "Project Management Certification", "description": "Fundamentals of project management", "validity_period": 24},
+            {"name": "Diversity & Inclusion Training", "description": "Training on diversity and inclusion in the workplace", "validity_period": 12},
+            {"name": "Customer Service Certification", "description": "Certification for delivering excellent customer service", "validity_period": 24}
+        ]
+        for cert in sample_certifications:
+            if not Certification.query.filter_by(name=cert["name"]).first():
+                new_certification = Certification(
+                    name=cert["name"],
+                    description=cert["description"],
+                    validity_period=cert["validity_period"]
+                )
+                db.session.add(new_certification)
+
+    db.session.commit()
+
 @app.route('/')
 def hello():
     return jsonify(message="Hello from Flask!")
@@ -176,51 +218,8 @@ def get_training_sessions_report():
 
 
 
-if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
+# if __name__ == '__main__':
+    
 
-        if not Employee.query.first():
-            sample_employee = Employee(name="John Doe", email="john.doe@example.com", department="Engineering")
-            db.session.add(sample_employee)
-
-        if not Trainer.query.first():
-            sample_trainers = [
-                {"name": "Alice Smith", "email": "alice.smith@example.com", "specialization": "Safety Training"},
-                {"name": "Matthew Sindac", "email": "matthew.sindac@example.com", "specialization": "Technical Training"},
-                {"name": "David Blaine", "email": "david.blaine@example.com", "specialization": "Soft Skills"},
-                {"name": "LeBron James", "email": "lebron.james@example.com", "specialization": "Teamwork Training"},
-                {"name": "Ja Morant", "email": "ja.morant@example.com", "specialization": "Leadership"},
-                {"name": "Damian Lillard", "email": "damian.lillard@example.com", "specialization": "Communication Skills"}
-            ]
-            for trainer in sample_trainers:
-                if not Trainer.query.filter_by(email=trainer["email"]).first():
-                    new_trainer = Trainer(name=trainer["name"], email=trainer["email"], specialization=trainer["specialization"])
-                    db.session.add(new_trainer)
-
-        if not Certification.query.first():
-            sample_certifications = [
-                {"name": "First Aid Certification", "description": "Basic first aid training", "validity_period": 24},
-                {"name": "CPR Certification", "description": "Certification in cardiopulmonary resuscitation", "validity_period": 12},
-                {"name": "Fire Safety Certification", "description": "Training on fire prevention and safety", "validity_period": 36},
-                {"name": "Leadership Training Certification", "description": "Skills development in leadership", "validity_period": 18},
-                {"name": "Conflict Resolution Certification", "description": "Training on resolving workplace conflicts", "validity_period": 24},
-                {"name": "Health & Safety Certification", "description": "Certification for workplace health and safety", "validity_period": 36},
-                {"name": "Time Management Certification", "description": "Skills for effective time management", "validity_period": 12},
-                {"name": "Project Management Certification", "description": "Fundamentals of project management", "validity_period": 24},
-                {"name": "Diversity & Inclusion Training", "description": "Training on diversity and inclusion in the workplace", "validity_period": 12},
-                {"name": "Customer Service Certification", "description": "Certification for delivering excellent customer service", "validity_period": 24}
-            ]
-            for cert in sample_certifications:
-                if not Certification.query.filter_by(name=cert["name"]).first():
-                    new_certification = Certification(
-                        name=cert["name"],
-                        description=cert["description"],
-                        validity_period=cert["validity_period"]
-                    )
-                    db.session.add(new_certification)
-
-        db.session.commit()
-
-    app.run()
+#     app.run()
 
