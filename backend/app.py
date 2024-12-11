@@ -2,11 +2,12 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from models import db, Employee, Certification, Trainer, TrainingSession, SessionRSVP
 from datetime import datetime
+import os
 
 app = Flask(__name__)
 CORS(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///training.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///local.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
@@ -219,4 +220,5 @@ if __name__ == '__main__':
 
         db.session.commit()
 
-    app.run(debug=True)
+    app.run()
+
